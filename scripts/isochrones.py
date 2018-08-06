@@ -7,6 +7,9 @@ isochrone_input_file = "input/wroclaw22.here.json"
 isochrone_output_file = "output/wroclaw22.here.geo.json"
 
 def parse_tomtom_data_json(data):
+    """
+    Converts json file returned by TomTom API(rachable range) into geojson polygon.
+    """
     coordinates = []
     for lat_lon in data['reachableRange']['boundary']:
         coordinates.append((lat_lon['longitude'], lat_lon['latitude']))
@@ -18,6 +21,9 @@ def parse_tomtom_data_json(data):
     return Polygon(outerPolygon)
 
 def parse_tomtom_data_xml(data):
+    """
+    Converts xml file returned by TomTom API(rachable range) into geojson polygon.
+    """
     xml_namespace = {'tomtom': 'http://api.tomtom.com/routing'}
     coordinates = []
     for point in data.findall('.//tomtom:point', xml_namespace):
@@ -32,6 +38,9 @@ def parse_tomtom_data_xml(data):
     return Polygon(outerPolygon)
 
 def parse_here_data(data):
+    """
+    Converts json file returned by Here API(isolines) into geojson polygon.
+    """
     for isoline in reversed(data['data']['response']['isoline']):
         coordinates = []
         for ind in range(0, len(isoline['component'][0]['shape'])):

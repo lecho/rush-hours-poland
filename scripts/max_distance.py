@@ -5,6 +5,9 @@ import geopy.distance
 isochrone_input_file = "input/wroclaw22-30min.xml"
 
 def parse_tomtom_data_xml(data):
+    """
+    Calculates maximum reachable distance in km from the center. Based on TomTom isochrones.
+    """
     xml_namespace = {'tomtom': 'http://api.tomtom.com/routing'}
     center_element = data.findall('.//tomtom:center', xml_namespace)[0]
     center_lat = center_element.get('latitude')
